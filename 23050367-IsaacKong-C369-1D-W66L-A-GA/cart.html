@@ -131,12 +131,6 @@
                         <input type="text" class="form-control" id="cardCVV" placeholder="123">
                     </div>
                 </div>
-                <div id="paypal-details" class="payment-details">
-                    <div class="mb-3">
-                        <label for="paypalEmail" class="form-label">PayPal Email</label>
-                        <input type="email" class="form-control" id="paypalEmail" placeholder="example@paypal.com">
-                    </div>
-                </div>
                 <button type="submit" class="btn btn-primary">Proceed to Checkout</button>
             </form>
         </div>
@@ -208,6 +202,27 @@
                 document.getElementById('card-details').style.display = (selectedMethod.type === 'card') ? 'block' : 'none';
                 document.getElementById('paypal-details').style.display = (selectedMethod.type === 'paypal') ? 'block' : 'none';
             }
+        });
+
+        // Handle form submission for checkout
+        document.getElementById('payment-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const paymentMethodIndex = document.getElementById('paymentMethod').value;
+            const paymentMethods = JSON.parse(localStorage.getItem('paymentMethods')) || [];
+
+            if (!paymentMethodIndex) {
+                alert('Please select a payment method.');
+                return;
+            }
+
+            const selectedMethod = paymentMethods[paymentMethodIndex];
+
+            // Simulate checkout process
+            alert(`Checkout successful with ${selectedMethod.type === 'card' ? 'Card' : 'PayPal'}.`);
+
+            // Clear cart after checkout
+            localStorage.removeItem('cart');
+            renderCartItems();
         });
 
         document.addEventListener('DOMContentLoaded', () => {

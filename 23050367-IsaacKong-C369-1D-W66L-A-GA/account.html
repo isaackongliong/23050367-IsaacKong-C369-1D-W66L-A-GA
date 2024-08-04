@@ -82,21 +82,21 @@
                 <div id="card-details" class="payment-details">
                     <div class="mb-3">
                         <label for="cardNumber" class="form-label">Card Number</label>
-                        <input type="text" class="form-control" id="cardNumber" placeholder="1234 5678 9012 3456" required>
+                        <input type="text" class="form-control" id="cardNumber" placeholder="1234 5678 9012 3456">
                     </div>
                     <div class="mb-3">
                         <label for="cardExpiry" class="form-label">Expiry Date</label>
-                        <input type="text" class="form-control" id="cardExpiry" placeholder="MM/YY" required>
+                        <input type="text" class="form-control" id="cardExpiry" placeholder="MM/YY">
                     </div>
                     <div class="mb-3">
                         <label for="cardCVV" class="form-label">CVV</label>
-                        <input type="text" class="form-control" id="cardCVV" placeholder="123" required>
+                        <input type="text" class="form-control" id="cardCVV" placeholder="123">
                     </div>
                 </div>
                 <div id="paypal-details" class="payment-details">
                     <div class="mb-3">
                         <label for="paypalEmail" class="form-label">PayPal Email</label>
-                        <input type="email" class="form-control" id="paypalEmail" placeholder="example@paypal.com" required>
+                        <input type="email" class="form-control" id="paypalEmail" placeholder="example@paypal.com">
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Add Payment Method</button>
@@ -207,7 +207,9 @@
                 };
             }
 
-            console.log('Payment Details:', paymentDetails); // Debugging log
+            // Log payment details for debugging
+            console.log('Payment Method:', paymentMethod);
+            console.log('Payment Details:', paymentDetails);
 
             // Validate payment details
             if ((paymentMethod === 'card' && (!paymentDetails.cardNumber || !paymentDetails.cardExpiry || !paymentDetails.cardCVV)) ||
@@ -223,7 +225,9 @@
             renderPaymentMethods();
 
             // Show success notification
-            document.getElementById('notification').style.display = 'block';
+            const notification = document.getElementById('notification');
+            notification.style.display = 'block';
+            setTimeout(() => notification.style.display = 'none', 3000); // Hide notification after 3 seconds
 
             // Clear form fields after submission
             document.getElementById('payment-form').reset();
@@ -231,17 +235,11 @@
             document.getElementById('paypal-details').style.display = 'none';
         });
 
-        function checkNotification() {
-            if (localStorage.getItem('subscriptionAdded') === 'true') {
-                document.getElementById('notification').style.display = 'block';
-                localStorage.removeItem('subscriptionAdded');
-            }
-        }
-
-        updateNavLinks();
-        renderPersonalInformation();
-        renderPaymentMethods();
-        checkNotification();
+        document.addEventListener('DOMContentLoaded', function() {
+            updateNavLinks();
+            renderPersonalInformation();
+            renderPaymentMethods();
+        });
     </script>
 </body>
 </html>
